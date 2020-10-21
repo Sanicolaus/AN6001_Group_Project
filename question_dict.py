@@ -67,10 +67,31 @@ mentalDict = {
 
 
 heartPreDict = {
-
+    "How old is the patient?":"",
+    "What is the gender of the patient?": ["Female", "Male"],
+    "What is the chest pain type of the patient?": ["continuous angina", "discontinuous angina", "non-anginal pain",
+                                                   "asymptomatic"],
+    "What is the resting blood pressure of the patient?": "",
+    "What is the serum cholesterol of the patient (in mg/dl)?":"",
+    "Is the patient’s fasting blood sugar higher than 120mg/dl?":["No", "Yes"],
+    "What is the resting electrocardiographic result of the patient?":["normal", "having ST-T wave abnormality",
+                                                                       "definite left ventricular hypertrophy"],
+    "What is the patient's maximum heart rate achieved?":"",
+    "Does the patient have exercise induced angina?":["No", "Yes"],
+    "Does the patient have ST depression induced by exercise relative to rest?":["No", "Yes"],
+    "What is the patient’s slope of the peak exercise ST segment (an integer from 0 to 2)?":"",
+    "How many major vessels of the patient are colored by fluoroscopy (maximum 3)":"",
+    "Does the patient have any heart defect previously?":["no","fixed defect", "reversable defect"]
 }
 
 
 heartComDict = {
-
+    "How old are you?":"",
+    "What's your gender?": ["Female", "Male"],
+    "What kind of chest pain type do you have?":["continuous angina", "discontinuous angina", "non-anginal pain",
+                                                   "asymptomatic"],
+    "What is your resting blood pressure?":"",
+    "What is your maximum heart rate achieved recently?":"",
+    "Do you have exercise induced angina?":["No", "Yes"],
+    "Do you have any heart defect previously?":["no","fixed defect", "reversable defect"]
 }

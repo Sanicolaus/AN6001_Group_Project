@@ -1,6 +1,6 @@
 import joblib
 import random
-from catboost import CatBoost
+from catboost import CatBoostClassifier
 
 
 professionalDict = {
@@ -30,12 +30,14 @@ def load_flu_professional():
 
 
 def load_heart_family():
-    model = CatBoost.load_model('C:/Users/sycwd/Desktop/NTU/save_model/heart_family_clf.pkl')
+    model = CatBoostClassifier()
+    model.load_model('C:/Users/sycwd/Desktop/NTU/save_model/heart_family_clf')
     return model
 
 
 def load_heart_professional():
-    model = CatBoost.load_model('C:/Users/sycwd/Desktop/NTU/save_model/heart_professional_clf.pkl')
+    model = CatBoostClassifier()
+    model.load_model('C:/Users/sycwd/Desktop/NTU/save_model/heart_professional_clf')
     return model
 
 
@@ -43,12 +45,25 @@ def pred_value_simulation(pred):
     simulated_term = random.uniform(0.7,1)
     return pred * simulated_term if pred else pred + 1 - simulated_term
 
+def tach_transform(value):
+    if value == 0:
+        return 3
+    elif value == 1:
+        return 6
+    elif value == 2:
+        return 7
 
 def get_result(version, disease, data):
     if version == 'Premiere':
         model = eval(professionalDict[disease])
+        if disease == 'Heart Disease':
+            data[0][2] += 1
+            data[0][12] = tach_transform(data[0][12])
     elif version == 'Community':
         model = eval(familyDict[disease])
+        if disease == 'Heart Disease':
+            data[0][2] += 1
+            data[0][6] = tach_transform(data[0][6])
     elif version == 'Special':
         model = load_mental()
         data[0][0] = (data[0][0] - 5)/67
