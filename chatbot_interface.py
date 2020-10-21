@@ -51,6 +51,7 @@ def get_result(version, disease, data):
         model = eval(familyDict[disease])
     elif version == 'Special':
         model = load_mental()
+        data[0][0] = (data[0][0] - 5)/67
     pred_value = pred_value_simulation(model.predict(data))
     return pred_value
 

@@ -8,7 +8,6 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 
-
 glVar = None
 varRange = None
 disease = None

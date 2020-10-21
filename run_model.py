@@ -30,6 +30,7 @@ mental = mental.drop(['comments'], axis= 1)
 mental = mental.drop(['state'], axis= 1)
 mental = mental.drop(['Timestamp'], axis= 1)
 mental = mental.drop(['Country'], axis= 1)
+mental = mental[(0< mental['Age']) & (mental['Age']<100)]
 #Unify missing values
 for feature in mental:
     if feature=='self_employed':
@@ -43,8 +44,8 @@ mental['Gender']=mental['Gender'].str.lower()
 gender = mental['Gender'].unique()
 
 # made gender groups
-male_str = ["male", "m", "male-ish", "maile", "mal", "male (cis)", "make", "male ", "man",
-            "msle", "mail", "malr","cis man", "Cis Male", "cis male"]
+male_str = ["male", "m", "male-ish", "maile", "mal", "male (cis)", "make", "male ",
+            "man","msle", "mail", "malr","cis man", "Cis Male", "cis male"]
 trans_str = ["trans-female", "something kinda male?", "queer/she/they", "non-binary","nah",
              "all", "enby", "fluid", "genderqueer", "androgyne", "agender", "male leaning androgynous",
              "guy (-ish) ^_^", "trans woman", "neuter", "female (trans)", "queer",
@@ -79,17 +80,18 @@ scaler = MinMaxScaler()
 mental['Age'] = scaler.fit_transform(mental[['Age']])
 mental.head()
 # define X and y
-feature_cols = ['Age', 'Gender', 'work_interfere', 'family_history', 'care_options','benefits', 'anonymity', 'leave']
+feature_cols = ['Age', 'Gender', 'work_interfere', 'family_history', 'care_options','benefits', 'anonymity',
+                'leave','obs_consequence','mental_health_interview','wellness_program','seek_help']
 mental_X = mental[feature_cols]
 mental_y = mental.treatment
 
 # split X and y into training and testing sets
-mental_X_train, mental_X_test, mental_y_train, mental_y_test = train_test_split(mental_X, mental_y,
-                                                                                test_size=0.30, random_state=0)
+mental_X_train, mental_X_test, mental_y_train, mental_y_test = train_test_split(mental_X, mental_y, test_size=0.30,
+                                                                                random_state=0)
 
 # model building
-mental_RandomForest = RandomForestClassifier(max_depth=3, min_samples_split=8,
-                                             min_samples_leaf=7,n_estimators = 20, random_state = 1)
+mental_RandomForest = RandomForestClassifier(max_depth=3, min_samples_split=2, criterion='entropy', min_samples_leaf=7,
+                                             n_estimators = 20, random_state = 1)
 mental_RandomForest.fit(mental_X_train, mental_y_train)
 
 #Flu Detection
