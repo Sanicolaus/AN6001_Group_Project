@@ -20,6 +20,11 @@ version = None
 questionDict = None
 # Record user's information
 data = None
+# Triage priority recording
+priority = {
+    "Flu":[],
+    "Heart Disease":[]
+}
 versionList = ['Premiere', 'Community', 'Special']
 diseaseList = ['Flu', 'Heart Disease', 'Mental Depression']
 
@@ -93,7 +98,11 @@ def answer(question):
         else:
             data.append(eval(question))
         data = np.asarray(data).reshape(1,-1)
-        print(data)
         predValue = get_result(version, disease,data)
+        if version == 'Premiere':
+            priority[disease].append(predValue)
+            message = f"The probability is {predValue}. There are {sorted(priority[disease], reverse=True).index(predValue)} patients waiting before your patient."
+        else:
+            message = f"The probability is {predValue}, bye."
         resetGlvar()
-        return f"The probability is {predValue}, bye."
+        return message

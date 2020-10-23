@@ -41,9 +41,9 @@ def load_heart_professional():
     return model
 
 
-def pred_value_simulation(pred):
-    simulated_term = random.uniform(0.7,1)
-    return pred * simulated_term if pred else pred + 1 - simulated_term
+#def pred_value_simulation(pred):
+#    simulated_term = random.uniform(0.7,1)
+#    return pred * simulated_term if pred else pred + 1 - simulated_term
 
 
 # Special data encoding for heart disease
@@ -71,6 +71,6 @@ def get_result(version, disease, data):
     elif version == 'Special':
         model = load_mental()
         data[0][0] = (data[0][0] - 5)/67
-    pred_value = pred_value_simulation(model.predict(data))
+    pred_value = model.predict_proba(data)[0][1]
     return pred_value
 
