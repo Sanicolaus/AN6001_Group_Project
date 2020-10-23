@@ -45,6 +45,8 @@ def pred_value_simulation(pred):
     simulated_term = random.uniform(0.7,1)
     return pred * simulated_term if pred else pred + 1 - simulated_term
 
+
+# Special data encoding for heart disease
 def tach_transform(value):
     if value == 0:
         return 3
@@ -53,6 +55,8 @@ def tach_transform(value):
     elif value == 2:
         return 7
 
+
+# Get the predicted value for one record.
 def get_result(version, disease, data):
     if version == 'Premiere':
         model = eval(professionalDict[disease])

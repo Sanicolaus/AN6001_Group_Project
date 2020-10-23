@@ -8,16 +8,23 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
 
+# Mark the position of current question in the question dictionary
 glVar = None
+# Record the length of question dictionary
 varRange = None
+# Record current disease
 disease = None
+# Record current version
 version = None
+# Referred as current question dictiionary
 questionDict = None
+# Record user's information
 data = None
 versionList = ['Premiere', 'Community', 'Special']
 diseaseList = ['Flu', 'Heart Disease', 'Mental Depression']
 
 
+# Initiate global variables
 def initGlvar():
     global glVar, varRange, disease, versionList,data, questionDict
     index = disease[0] + version[0]
@@ -27,6 +34,7 @@ def initGlvar():
     data = []
 
 
+# Reset global variables
 def resetGlvar():
     global glVar, varRange, disease, version, questionDict
     glVar = None
@@ -35,7 +43,7 @@ def resetGlvar():
     version = None
     questionDict = None
 
-
+# Used as a test interface. Nothing to do normally
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
@@ -44,32 +52,40 @@ def hello_world():
 @app.route('/asked/<string:question>')
 def answer(question):
     global version, versionList, disease, glVar, varRange, questionDict, data
+    # Receive the version parameter from user.
     if question in versionList:
         version = question
         return 'Thank you. Please enter the name of targeted disease.'
+    # Firstly check whether there is a valid version
     if version is None:
         return 'Please select the version of triage chatbot.'
+    # Receive the disease parameter from user.
     if question in diseaseList:
         disease = question
         initGlvar()
         print(questionDict)
         glVar += 1
+        # Post the first question in question dictionary
         if list(questionDict.values())[glVar-1] != "":
             return {'questions': list(questionDict.keys())[glVar-1],
                     'suggestions': list(questionDict.values())[glVar-1]}
         else:
             return {'questions': list(questionDict.keys())[glVar - 1]}
+    # Receive answers from user with each question. Record those information in global variable data
     if glVar <= varRange - 1:
         if list(questionDict.values())[glVar - 1] != "":
+            # label encoding
             data.append(list(questionDict.values())[glVar - 1].index(question))
         else:
             data.append(eval(question))
         glVar += 1
+        # Post the next question
         if list(questionDict.values())[glVar - 1] != "":
             return {'questions': list(questionDict.keys())[glVar - 1],
                     'suggestions': list(questionDict.values())[glVar - 1]}
         else:
             return {'questions': list(questionDict.keys())[glVar - 1]}
+    # After receiving all questions, post a predicted value.
     elif glVar == varRange:
         if list(questionDict.values())[glVar - 1] != "":
             data.append(
