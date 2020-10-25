@@ -60,10 +60,12 @@ def answer(question):
     # Receive the version parameter from user.
     if question in versionList:
         version = question
-        return 'Thank you. Please enter the name of targeted disease.'
+        return {'questions': 'Thank you. Please enter the name of targeted disease.',
+                'suggestions': diseaseList}
     # Firstly check whether there is a valid version
     if version is None:
-        return 'Please select the version of triage chatbot.'
+        return {'questions': 'Please select the version of triage chatbot.',
+                'suggestions': versionList}
     # Receive the disease parameter from user.
     if question in diseaseList:
         disease = question
@@ -101,8 +103,8 @@ def answer(question):
         predValue = get_result(version, disease,data)
         if version == 'Premiere':
             priority[disease].append(predValue)
-            message = f"The probability is {predValue}. There are {sorted(priority[disease], reverse=True).index(predValue)} patients waiting before your patient."
+            message = f"The probability is {predValue*100:.2f}%. There are {sorted(priority[disease], reverse=True).index(predValue)} patients waiting before your patient."
         else:
-            message = f"The probability is {predValue}, bye."
+            message = f"The probability is {predValue*100:.2f}%, bye."
         resetGlvar()
-        return message
+        return {'questions': message}
