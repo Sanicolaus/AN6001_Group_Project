@@ -67,7 +67,6 @@ export default {
   methods: {
     sendMessage(text) {
       if (text.length > 0) {
-        // this.newMessagesCount = this.isChatOpen?this.newMessagesCount:this.newMessagesCount+1
         this.onMessageWasSent({
           author: "me",
           type: "text",
@@ -85,14 +84,15 @@ export default {
     async getResponse(question) {
       try {
         let response = await axios.get(`http://localhost:5000/asked/${question}`)
+        console.log(response.data)
         this.messageList=[
           ...this.messageList, 
           {
             author: "bot",
             type: "text",
             id: Math.random(),
-            data: {text: response.data},
-            suggestions: ["Yes", "No"]
+            data: {text: response.data.questions},
+            suggestions: response.data.suggestions == null ? [] : response.data.suggestions
           },
         ]
       }catch(err){console.warn(err)}
