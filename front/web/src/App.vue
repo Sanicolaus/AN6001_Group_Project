@@ -27,6 +27,7 @@
       @remove="removeMessage"
     >
       <template v-slot:header>
+        <img style="width:50px;height:50px;margin-top:10px;margin-right:10px" src='https://ftp.bmp.ovh/imgs/2020/10/6778f65034e8f098.png' />
         <h2>AI Diagnose Bot</h2>
       </template>
     </beautiful-chat>
