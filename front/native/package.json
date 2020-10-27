@@ -1,0 +1,16 @@
+{
+  "name": "chat-app-v2",
+  "version": "1.0.0",
+  "description": "a chat bot app desktop front end",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sycamoie",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^10.1.3"
+  }
+}

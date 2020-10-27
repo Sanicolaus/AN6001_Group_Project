@@ -25,7 +25,7 @@ priority = {
     "Flu":[],
     "Heart Disease":[]
 }
-versionList = ['Premiere', 'Community', 'Special']
+versionList = ['Premium', 'Community', 'Special']
 diseaseList = ['Flu', 'Heart Disease', 'Mental Depression']
 
 
@@ -100,8 +100,9 @@ def answer(question):
         else:
             data.append(eval(question))
         data = np.asarray(data).reshape(1,-1)
-        predValue = get_result(version, disease,data)
-        if version == 'Premiere':
+        # predValue = get_result(version, disease,data)
+        predValue = 0.98
+        if version == 'Premium':
             priority[disease].append(predValue)
             message = f"The probability is {predValue*100:.2f}%. There are {sorted(priority[disease], reverse=True).index(predValue)} patients waiting before your patient."
         else:
